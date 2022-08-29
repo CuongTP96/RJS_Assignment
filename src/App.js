@@ -3,14 +3,16 @@ import logo from "./logo.svg";
 import { Navbar, NavbarBrand } from "reactstrap";
 import Menu from "./components/MenuComponent";
 import "./App.css";
-import { DISHES } from "./shared/dishes";
+// Sau khi tải file staffs.jsx về bạn import dữ liệu vào App và truyền STAFFS vào component StaffList;
+import StaffList from "./components/StaffListComponent";
+import { STAFFS } from "./shared/staffs";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dishes: DISHES,
+      staffs: STAFFS,
     };
   }
 
@@ -19,10 +21,10 @@ class App extends Component {
       <div>
         <Navbar dark color="primary">
           <div className="container">
-            <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
+            <NavbarBrand href="/">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
           </div>
         </Navbar>
-        <Menu dishes={this.state.dishes} />
+        <StaffList staffs={this.state.staffs} />
       </div>
     );
   }
