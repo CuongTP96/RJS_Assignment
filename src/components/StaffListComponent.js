@@ -31,6 +31,10 @@ class StaffList extends Component {
     });
   }
 
+  DoiMauKhungTen = (i, e) => {
+    this.setState({ cr_id: i });
+  };
+
   renderStaff(staff) {
     if (staff != null) {
       return (
@@ -58,9 +62,17 @@ class StaffList extends Component {
   }
 
   render() {
+    let _C_value = this.state.cr_id;
+
     const StaffList = this.props.staffs.map((staff) => {
       return (
-        <div className={this.state.QuanLyHienThi}>
+        <div
+          className={this.state.QuanLyHienThi}
+          style={{
+            background: staff.id === _C_value ? "blue" : "",
+          }}
+          onClick={this.DoiMauKhungTen.bind(this, staff.id)}
+        >
           <Card key={staff.id} onClick={() => this.TraCuuNhanSu(staff)}>
             <CardBody>
               <CardTitle>{staff.name}</CardTitle>
