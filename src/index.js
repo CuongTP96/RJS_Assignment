@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+//Lab 05.1 Cài các module Font Awesom và Bootstrap-social
 import "font-awesome/css/font-awesome.css";
 import "bootstrap-social/bootstrap-social.css";
+
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
