@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardTitle, CardBody, CardText } from "reactstrap";
 
+// Container Component liên quan đến cách mọi thứ hoạt động
 function Department(props) {
   // Dùng map() để lọc toàn bộ dữ liệu props trong MainComponent
   const DSPhongBan = props.phongB.map((department) => {
@@ -17,7 +18,7 @@ function Department(props) {
   );
 }
 
-// Presentational Component
+// Presentational Component chịu trách nhiệm liên quan đến việc mọi thứ được hiển thị như thế nào
 class RenderPhongBan extends Component {
   render() {
     return (
