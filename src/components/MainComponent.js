@@ -1,82 +1,76 @@
-import React, { Component } from "react";
-import Menu from "./MenuComponent";
+import React, { useState, Component } from "react";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import Home from "./HomeComponent";
-import { Switch, Redirect, Route, withRouter } from "react-router-dom";
-import Contact from "./ContactComponent";
-import DishDetail from "./DishdetailComponent";
-import About from "./AboutComponent";
-import { connect } from "react-redux";
-
-const mapStateToProps = (state) => {
-  return {
-    dishes: state.dishes,
-    comments: state.comments,
-    promotions: state.promotions,
-    leaders: state.leaders,
-  };
-};
+import { Switch, Redirect, Route } from "react-router-dom";
+import { DEPARTMENTS, STAFFS } from "../shared/staffs";
+// Các trang trong web
+import StaffList from "./StaffListComponent";
+import ChiTietNV from "./ChiTietNhanVien";
+import Department from "./PhongBan";
+import Luong from "./Luong";
 
 class Main extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      staffs: STAFFS,
+      departments: DEPARTMENTS,
+    };
+
+    this.addStaff = this.addStaff.bind(this);
   }
 
-  // Hiển thị định hướng đường dẫn
-  render() {
-    const HomePage = () => {
-      // Truyền Main vào Home
-      return (
-        <Home
-          dish={this.props.dishes.filter((dish) => dish.featured)[0]}
-          promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]}
-        />
-      );
-    };
+  // Tạo 1 id ngẫu nhiên cho nhân viên mới
+  addStaff = (staff) => {
+    const id = Math.floor(Math.random() * 10000 + 1);
+    const newStaff = { id, ...staff };
+    this.setState({
+      staffs: [...this.state.staffs, newStaff],
+    });
+    console.log(newStaff);
+    console.log(this.state.staffs);
+  };
 
-    // Nhận tham số match vào đưa vào thẻ DishDetail, sau đó lọc dish.id để trả về toàn bộ mảng đối tượng cần tìm (tương tự với comment)
-    const DishWithId = ({ match }) => {
+  render() {
+    const StaffWithID = ({ match }) => {
       return (
-        <DishDetail
-          dish={
-            this.props.dishes.filter(
-              (dish) => dish.id === parseInt(match.params.dishId, 10)
+        <ChiTietNV
+          nv={
+            this.state.staffs.filter(
+              (nv) => nv.id === parseInt(match.params.nhanvienId, 10)
             )[0]
           }
-          comments={this.props.comments.filter(
-            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
-          )}
         />
       );
     };
 
+    // Cấu trúc điều hướng trong trang web
     return (
       <div>
         <Header />
-
         <Switch>
-          <Route path="/home" component={HomePage} />
           <Route
             exact
-            path="/menu"
-            component={() => <Menu dishes={this.props.dishes} />}
+            path={"/nhanvien"}
+            component={() => (
+              <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />
+            )}
           />
-          <Route path="/menu/:dishId" component={DishWithId} />
-          <Route exact path="/contactus" component={Contact} />
+          <Route path="/nhanvien/:nhanvienId" component={StaffWithID} />
           <Route
-            exact
-            path="/aboutus"
-            component={() => <About leaders={this.props.leaders} />}
+            path="/phongban"
+            component={() => <Department phongB={this.state.departments} />}
           />
-          <Redirect to="/home" />
+          <Route
+            path="/bangluong"
+            component={() => <Luong Tluong={this.state.staffs} />}
+          />
         </Switch>
-
+        <Redirect to="/nhanvien" />
         <Footer />
       </div>
     );
   }
 }
-
-export default withRouter(connect(mapStateToProps)(Main));
+export default Main;

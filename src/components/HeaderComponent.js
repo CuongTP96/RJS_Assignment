@@ -1,22 +1,11 @@
 import React, { Component } from "react";
-
-// Lab 06.3 cập nhật Modal
 import {
+  Nav,
   Navbar,
   NavbarBrand,
-  Nav,
   NavbarToggler,
   Collapse,
   NavItem,
-  Jumbotron,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Input,
-  Label,
 } from "reactstrap";
 
 // gọi react router cho bảng menu với điện thoại
@@ -26,14 +15,10 @@ class Header extends Component {
   constructor(props) {
     super(props);
 
+    this.toggleNav = this.toggleNav.bind(this);
     this.state = {
       isNavOpen: false,
-      isModalOpen: false,
     };
-
-    this.toggleNav = this.toggleNav.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
   }
 
   toggleNav() {
@@ -42,26 +27,7 @@ class Header extends Component {
     });
   }
 
-  toggleModal() {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen,
-    });
-  }
-
-  // Uncontrolled Components, thông báo đăng ký thành công sau khi nhấn nút Login
-  handleLogin(event) {
-    this.toggleModal();
-    alert(
-      "Username: " +
-        this.username.value +
-        " Password: " +
-        this.password.value +
-        " Remember: " +
-        this.remember.checked
-    );
-    event.preventDefault();
-  }
-
+  // Sử dụng NavbarToggler để tạo thanh menu cho điện thoại
   render() {
     return (
       <div>
@@ -73,98 +39,30 @@ class Header extends Component {
                 src="assets/images/logo.png"
                 height="30"
                 width="41"
-                alt="Ristorante Con Fusion"
+                alt="Quản lý nhân viên"
               />
             </NavbarBrand>
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink className="nav-link" to="/home">
-                    <span className="fa fa-home fa-lg"></span> Home
+                  <NavLink className="nav-link" to="/nhanvien">
+                    <span className="fa fa-users fa-lg"></span> Nhân Viên
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/aboutus">
-                    <span className="fa fa-info fa-lg"></span> About Us
+                  <NavLink className="nav-link" to="/phongban">
+                    <span className="fa fa-address-card fa-lg"></span> Phòng Ban
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/menu">
-                    <span className="fa fa-list fa-lg"></span> Menu
+                  <NavLink className="nav-link" to="/bangluong">
+                    <span className="fa fa-money fa-lg"></span> Bảng Lương
                   </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="nav-link" to="/contactus">
-                    <span className="fa fa-address-card fa-lg"></span> Contact
-                    Us
-                  </NavLink>
-                </NavItem>
-              </Nav>
-
-              {/* Thêm nút button vào nabar để kích hoạt kéo trượt modal*/}
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <Button outline onClick={this.toggleModal}>
-                    <span className="fa fa-sign-in fa-lg"></span> Login
-                  </Button>
                 </NavItem>
               </Nav>
             </Collapse>
           </div>
         </Navbar>
-        <Jumbotron>
-          <div className="container">
-            <div className="row row-header">
-              <div className="col-12 col-sm-6">
-                <h1>Ristorante con Fusion</h1>
-                <p>
-                  We take inspiration from the World's best cuisines, and create
-                  a unique fusion experience. Our lipsmacking creations will
-                  tickle your culinary senses!
-                </p>
-              </div>
-            </div>
-          </div>
-        </Jumbotron>
-
-        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.handleLogin}>
-              <FormGroup>
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  type="text"
-                  id="username"
-                  name="username"
-                  innerRef={(input) => (this.username = input)}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  innerRef={(input) => (this.password = input)}
-                />
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <Input
-                    type="checkbox"
-                    name="remember"
-                    innerRef={(input) => (this.remember = input)}
-                  />
-                  Remember me
-                </Label>
-              </FormGroup>
-              <Button type="submit" value="submit" color="primary">
-                Login
-              </Button>
-            </Form>
-          </ModalBody>
-        </Modal>
       </div>
     );
   }
