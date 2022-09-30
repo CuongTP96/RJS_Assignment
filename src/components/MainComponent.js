@@ -60,7 +60,13 @@ class Main extends Component {
           <Route path="/nhanvien/:nhanvienId" component={StaffWithID} />
           <Route
             path="/phongban"
-            component={() => <Department phongB={this.state.departments} />}
+            component={() => (
+              <Department
+                Department
+                phongB={this.state.departments}
+                staffs={this.state.staffs}
+              />
+            )}
           />
           <Route
             path="/bangluong"
