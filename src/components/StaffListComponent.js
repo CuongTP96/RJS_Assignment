@@ -160,8 +160,7 @@ class StaffList extends Component {
       this.state.overTime
     );
 
-    // //////////////////////////////////////////////////////////////////////////////////////
-    // Tình huống 1: Tìm nhân viên
+    //  Cách thức tìm nhân viên theo tên
     const staffList = this.props.staffs
       .filter((val) => {
         if (this.state.tenTim === "") return val;
@@ -219,8 +218,7 @@ class StaffList extends Component {
           <hr />
         </div>
 
-        {/*  // //////////////////////////////////////////////////////////////////////////////
-    // Tình huống 2: Thêm nhân viên mới */}
+        {/* Thêm nhân viên mới */}
         <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Thêm Nhân Viên</ModalHeader>
           <ModalBody>
